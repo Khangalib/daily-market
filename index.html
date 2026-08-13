@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily Market | অনলাইন বাজার</title>
+<style>
+:root{--g:#087f5b;--g2:#065c43;--bg:#f6f8f6;--card:#fff;--text:#17221d;--muted:#68766f;--line:#e3e9e5;--red:#e53935}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,"Noto Sans Bengali",sans-serif;background:var(--bg);color:var(--text)}
+a{text-decoration:none;color:inherit}button,input,select{font:inherit}.top{background:var(--g2);color:#fff;text-align:center;padding:8px;font-size:13px}
+header{position:sticky;top:0;z-index:20;background:#fff;box-shadow:0 2px 15px #00000010}.nav{max-width:1180px;margin:auto;padding:13px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}.logo{font-size:24px;font-weight:900;color:var(--g);white-space:nowrap}.logo b{color:#ff8a00}
+.search{flex:1;min-width:180px;display:flex;background:#f0f4f1;border-radius:12px;overflow:hidden}.search input{width:100%;border:0;outline:0;background:transparent;padding:12px 14px}.search button{border:0;background:var(--g);color:#fff;padding:0 17px}.navbtn{border:0;border-radius:10px;padding:11px 14px;background:#eaf6f1;color:var(--g);font-weight:800;cursor:pointer}
+.wrap{max-width:1180px;margin:auto;padding:0 18px}.hero{margin:20px 0;background:linear-gradient(120deg,#dff5e9,#fff1d7);border-radius:24px;padding:34px;display:flex;justify-content:space-between;align-items:center}.hero h1{font-size:clamp(29px,5vw,50px);line-height:1.12;margin:0 0 12px}.hero p{color:var(--muted);margin:0 0 20px}.heroArt{font-size:95px}.btn{border:0;background:var(--g);color:#fff;border-radius:10px;padding:12px 18px;font-weight:800;cursor:pointer}
+.section{margin:25px 0}.sectionHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.sectionHead h2{margin:0}.cats{display:flex;gap:10px;overflow:auto}.cat{border:1px solid var(--line);background:#fff;padding:10px 15px;border-radius:12px;white-space:nowrap;cursor:pointer}.cat.active{background:var(--g);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.product{background:var(--card);border-radius:16px;padding:12px;box-shadow:0 2px 12px #0000000a}.photo{height:160px;border-radius:13px;background:#edf6f1;display:grid;place-items:center;font-size:72px}.product h3{margin:10px 0 4px;font-size:17px}.muted{font-size:13px;color:var(--muted)}.price{font-size:19px;font-weight:900;margin:8px 0}.old{text-decoration:line-through;color:#999;font-size:13px;margin-left:5px}.add{width:100%;padding:10px;border:0;border-radius:9px;background:var(--g);color:#fff;font-weight:800;cursor:pointer}.add:active{transform:scale(.98)}
+footer{background:#12372a;color:#fff;margin-top:40px;padding:35px 18px}.foot{max-width:1180px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:25px}.foot h3{margin-top:0}.foot p{color:#cbd9d2}.modal{position:fixed;inset:0;background:#0008;z-index:50;display:none;align-items:flex-end;justify-content:center}.modal.open{display:flex}.panel{background:#fff;width:min(620px,100%);max-height:90vh;overflow:auto;border-radius:22px 22px 0 0;padding:20px}.close{float:right;border:0;border-radius:50%;width:35px;height:35px}.row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:12px 0}.qty button{width:30px;height:30px;border:1px solid var(--line);background:#fff;border-radius:6px}.form input,.form textarea{width:100%;padding:11px;margin:6px 0 10px;border:1px solid var(--line);border-radius:9px;outline:none}.form textarea{min-height:80px}.wa{width:100%;background:#25d366;color:#fff;border:0;border-radius:10px;padding:13px;font-weight:900;cursor:pointer}
+.badge{display:inline-block;background:#fff0d9;color:#9a5b00;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:800}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr}.heroArt{font-size:65px}}
+@media(max-width:520px){.grid{gap:9px}.photo{height:125px;font-size:56px}.hero{padding:23px}.heroArt{display:none}.foot{grid-template-columns:1fr}.nav{padding:11px}.logo{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="top">🚚 দ্রুত ডেলিভারি • 💵 ক্যাশ অন ডেলিভারি • 📲 WhatsApp অর্ডার</div>
+<header><div class="nav">
+<a class="logo" href="#">Daily<b>Market</b></a>
+<div class="search"><input id="search" placeholder="পণ্য খুঁজুন..." oninput="render()"><button>🔎</button></div>
+<button class="navbtn" onclick="openCart()">🛒 কার্ট (<span id="count">0</span>)</button>
+</div></header>
+
+<main class="wrap">
+<section class="hero"><div><span class="badge">আজকের বাজার</span><h1>আপনার প্রতিদিনের<br>বাজার এখন ঘরে</h1><p>তাজা সবজি, ফল, মুদি ও প্রয়োজনীয় পণ্য—সহজে অর্ডার করুন।</p><button class="btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">কেনাকাটা শুরু করুন</button></div><div class="heroArt">🥦🍎🛍️</div></section>
+<section class="section"><div class="sectionHead"><h2>ক্যাটাগরি</h2></div><div id="cats" class="cats"></div></section>
+<section class="section" id="products"><div class="sectionHead"><h2>জনপ্রিয় পণ্য</h2><span class="muted" id="result"></span></div><div id="grid" class="grid"></div></section>
+</main>
+
+<footer><div class="foot">
+<div><h3>Daily Market</h3><p>আপনার এলাকার সহজ ও নির্ভরযোগ্য অনলাইন বাজার।</p></div>
+<div><h3>সেবা</h3><p>হোম ডেলিভারি<br>ক্যাশ অন ডেলিভারি<br>WhatsApp অর্ডার</p></div>
+<div><h3>যোগাযোগ</h3><p>📞 01XXXXXXXXX<br>📍 আপনার ঠিকানা</p></div>
+</div></footer>
+
+<div id="cartModal" class="modal" onclick="if(event.target===this)closeCart()"><div class="panel">
+<button class="close" onclick="closeCart()">✕</button><h2>🛒 আপনার কার্ট</h2><div id="cartItems"></div><h3 id="total">মোট: ৳0</h3>
+<div class="form"><input id="name" placeholder="আপনার নাম"><input id="phone" placeholder="মোবাইল নম্বর"><textarea id="address" placeholder="ডেলিভারি ঠিকানা"></textarea></div>
+<button class="wa" onclick="sendOrder()">WhatsApp-এ অর্ডার পাঠান</button>
+</div></div>
+
+<script>
+const products=[
+{id:1,n:"আলু",c:"সবজি",p:45,u:"কেজি",e:"🥔",o:55},{id:2,n:"পেঁয়াজ",c:"সবজি",p:80,u:"কেজি",e:"🧅",o:95},
+{id:3,n:"টমেটো",c:"সবজি",p:70,u:"কেজি",e:"🍅",o:80},{id:4,n:"শসা",c:"সবজি",p:65,u:"কেজি",e:"🥒",o:75},
+{id:5,n:"আপেল",c:"ফল",p:220,u:"কেজি",e:"🍎",o:250},{id:6,n:"কলা",c:"ফল",p:90,u:"ডজন",e:"🍌",o:100},
+{id:7,n:"কমলা",c:"ফল",p:180,u:"কেজি",e:"🍊",o:200},{id:8,n:"দুধ",c:"দুধ ও ডিম",p:100,u:"লিটার",e:"🥛",o:110},
+{id:9,n:"ডিম",c:"দুধ ও ডিম",p:150,u:"ডজন",e:"🥚",o:165},{id:10,n:"চাল",c:"মুদি",p:75,u:"কেজি",e:"🍚",o:85},
+{id:11,n:"ডাল",c:"মুদি",p:130,u:"কেজি",e:"🫘",o:145},{id:12,n:"সয়াবিন তেল",c:"মুদি",p:190,u:"লিটার",e:"🫗",o:205},
+{id:13,n:"বিস্কুট",c:"স্ন্যাকস",p:50,u:"প্যাকেট",e:"🍪",o:60},{id:14,n:"পাউরুটি",c:"স্ন্যাকস",p:60,u:"প্যাকেট",e:"🍞",o:70}
+];
+let cat="সব",cart=JSON.parse(localStorage.getItem("dm_cart")||"[]");
+const cats=["সব",...new Set(products.map(x=>x.c))];
+document.getElementById("cats").innerHTML=cats.map(x=>`<button class="cat ${x==="সব"?"active":""}" onclick="setCat('${x}',this)">${x}</button>`).join("");
+function setCat(x,b){cat=x;document.querySelectorAll(".cat").forEach(a=>a.classList.remove("active"));b.classList.add("active");render()}
+function render(){
+let q=document.getElementById("search").value.trim().toLowerCase(), list=products.filter(x=>(cat==="সব"||x.c===cat)&&x.n.toLowerCase().includes(q));
+document.getElementById("result").textContent=list.length+"টি পণ্য";
+document.getElementById("grid").innerHTML=list.map(x=>`<article class="product"><div class="photo">${x.e}</div><h3>${x.n}</h3><div class="muted">${x.c} • ${x.u}</div><div class="price">৳${x.p}<span class="old">৳${x.o}</span></div><button class="add" onclick="add(${x.id})">কার্টে যোগ করুন</button></article>`).join("");
+updateCount()
+}
+function add(id){let x=cart.find(a=>a.id===id);x?x.q++:cart.push({id,q:1});save();openCart()}
+function save(){localStorage.setItem("dm_cart",JSON.stringify(cart));updateCount()}
+function updateCount(){document.getElementById("count").textContent=cart.reduce((s,x)=>s+x.q,0)}
+function openCart(){drawCart();document.getElementById("cartModal").classList.add("open")}
+function closeCart(){document.getElementById("cartModal").classList.remove("open")}
+function change(id,d){let x=cart.find(a=>a.id===id);if(!x)return;x.q+=d;if(x.q<1)cart=cart.filter(a=>a.id!==id);save();drawCart()}
+function drawCart(){
+let total=0;
+document.getElementById("cartItems").innerHTML=cart.length?cart.map(x=>{let p=products.find(a=>a.id===x.id),s=p.p*x.q;total+=s;return `<div class="row"><div>${p.e} <b>${p.n}</b><br><small>৳${p.p} × ${x.q}</small></div><div class="qty"><button onclick="change(${p.id},-1)">−</button> ${x.q} <button onclick="change(${p.id},1)">+</button><br><b>৳${s}</b></div></div>`}).join(""):"<p>কার্ট খালি।</p>";
+document.getElementById("total").textContent="মোট: ৳"+total;
+}
+function sendOrder(){
+if(!cart.length)return alert("কার্টে কোনো পণ্য নেই।");
+let n=document.getElementById("name").value.trim(),ph=document.getElementById("phone").value.trim(),ad=document.getElementById("address").value.trim();
+if(!n||!ph||!ad)return alert("নাম, ফোন ও ঠিকানা দিন।");
+let total=0,msg="*Daily Market Order*%0A%0A";
+cart.forEach(x=>{let p=products.find(a=>a.id===x.id);total+=p.p*x.q;msg+=`${p.n} × ${x.q} = ৳${p.p*x.q}%0A`});
+msg+=`%0A*মোট: ৳${total}*%0Aনাম: ${encodeURIComponent(n)}%0Aফোন: ${encodeURIComponent(ph)}%0Aঠিকানা: ${encodeURIComponent(ad)}`;
+window.open("https://wa.me/?text="+msg,"_blank");
+}
+render();
+</script>
+</body></html>
